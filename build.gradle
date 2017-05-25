@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+version = '0.1'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Fab',
+                   'Implementation-Version': version,
+                   'Main-Class': 'fi.evident.fab.Main'
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
