@@ -1,4 +1,31 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.1.2'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.1.2"
+}
+
 apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = "fi.evident.fab.Main"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
 
 version = '0.1'
 
@@ -8,6 +35,9 @@ jar {
                    'Implementation-Version': version,
                    'Main-Class': 'fi.evident.fab.Main'
     }
+
+    // Hack: include kotlin to jar
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 sourceCompatibility = 1.8

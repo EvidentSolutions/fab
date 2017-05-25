@@ -15,4 +15,6 @@ To test out the program, run the following in project root directory.
 
 == Credits
 
-This project started as a partial Java port of REWEQ2EQPreset. See: https://github.com/perivar/REWEQ2EQPreset
+This project started as a partial Java port of https://github.com/perivar/REWEQ2EQPreset[REWEQ2EQPreset].
+
+It is further ported to Kotlin (in non-idiomatic fashion).
