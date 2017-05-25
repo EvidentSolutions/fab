@@ -1,0 +1,18 @@
+= fab
+
+Converts room equalizer wizard filters to fabfilter pro q2 presets
+
+== Compile project
+
+`./gradlew clean build`
+
+== Example
+
+The `examples` directory contains an example data file.
+To test out the program, run the following in project root directory.
+
+`java -jar build/libs/Fab-0.1.jar -stereo examples/filters.txt -out examples/output.ffp`
+
+== Credits
+
+This project started as a partial Java port of REWEQ2EQPreset. See: https://github.com/perivar/REWEQ2EQPreset
