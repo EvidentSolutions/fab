@@ -2,6 +2,7 @@ package fi.evident.fab.rew;
 
 public class Filter {
 
+    @SuppressWarnings("unused")
     public enum Type {
         PK, // PK for a peaking (parametric) filter
         LP, // LP for a 12dB/octave Low Pass filter (Q=0.7071)
@@ -28,6 +29,7 @@ public class Filter {
     private final double gain;		// dB
     private final double q;
 
+    @SuppressWarnings("SameParameterValue")
     Filter(boolean enabled, Type type, double frequency, double gain, double q) {
         this.enabled = enabled;
         this.type = type;

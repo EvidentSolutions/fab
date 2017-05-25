@@ -4,6 +4,7 @@ import fi.evident.fab.rew.FilterSlope;
 
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 public enum BandSlope {
 
     db_oct12(1),

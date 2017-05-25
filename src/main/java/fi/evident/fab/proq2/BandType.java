@@ -4,6 +4,7 @@ import fi.evident.fab.rew.Filter;
 
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 enum BandType {
 
     Bell(0),

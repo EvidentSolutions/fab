@@ -36,7 +36,7 @@ final class Band {
         );
     }
 
-    static Band unusedBand = new Band(
+    final static Band unusedBand = new Band(
             BandType.Bell,
             BandSlope.dB_oct24,
             BandPlacement.Stereo,

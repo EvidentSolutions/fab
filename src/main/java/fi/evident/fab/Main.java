@@ -14,6 +14,7 @@ import static fi.evident.fab.rew.FilterPlacement.Stereo;
 import static fi.evident.fab.rew.FilterSlope.dB_oct24;
 import static fi.evident.fab.rew.Parser.parseFilterFile;
 
+@SuppressWarnings("WeakerAccess")
 public class Main {
 
     public static void main(String[] args) throws IOException {

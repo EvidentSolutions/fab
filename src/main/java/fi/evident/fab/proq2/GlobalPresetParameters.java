@@ -2,8 +2,10 @@ package fi.evident.fab.proq2;
 
 import java.io.IOException;
 
+@SuppressWarnings("ALL")
 public final class GlobalPresetParameters {
 
+    @SuppressWarnings("unused")
     static class ProcessMode {
 
         enum Phase {
@@ -51,6 +53,7 @@ public final class GlobalPresetParameters {
         }
     }
 
+    @SuppressWarnings("unused")
     enum ChannelMode {
 
         LeftRight(0),
@@ -116,6 +119,7 @@ public final class GlobalPresetParameters {
         }
     }
 
+    @SuppressWarnings("unused")
     static class Analyzer {
 
         enum Range {
@@ -214,18 +218,18 @@ public final class GlobalPresetParameters {
         }
     }
 
-    ProcessMode processMode = ProcessMode.linearPhase(ProcessMode.Phase.Medium);
-    ChannelMode channelMode = ChannelMode.LeftRight;
-    Gain gain = new Gain(0, 1);
-    OutputPan pan = new OutputPan(0);
-    boolean bypass = false;
-    boolean phaseInvert = false;
-    boolean autoGain = false;
-    Analyzer analyzer = new Analyzer();
-    float unknown1 = 2;
-    boolean midiLearn = false;
-    float unknown2 = -1; // solo band ??
-    float unknown3 = 0;
+    private ProcessMode processMode = ProcessMode.linearPhase(ProcessMode.Phase.Medium);
+    private ChannelMode channelMode = ChannelMode.LeftRight;
+    private Gain gain = new Gain(0, 1);
+    private OutputPan pan = new OutputPan(0);
+    private boolean bypass = false;
+    private boolean phaseInvert = false;
+    private boolean autoGain = false;
+    private Analyzer analyzer = new Analyzer();
+    private float unknown1 = 2;
+    private boolean midiLearn = false;
+    private float unknown2 = -1; // solo band ??
+    private float unknown3 = 0;
 
     public void write(LittleEndianBinaryStreamWriter writer) throws IOException {
         processMode.write(writer);

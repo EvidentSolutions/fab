@@ -1,5 +1,5 @@
 .gradle
-.idea
 build
 out
-*.iml
+examples/output.ffp
+.idea/workspace.xml

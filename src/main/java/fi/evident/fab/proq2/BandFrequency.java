@@ -2,7 +2,7 @@ package fi.evident.fab.proq2;
 
 import java.io.IOException;
 
-public class BandFrequency {
+class BandFrequency {
 
     private final double frequency;
 

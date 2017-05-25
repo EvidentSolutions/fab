@@ -11,10 +11,10 @@ import java.util.stream.Stream;
 
 public class Parser {
 
-    private static Pattern digitsAndDecimalSeparatorOnly = Pattern.compile("[^\\d\\.]");
+    private final static Pattern digitsAndDecimalSeparatorOnly = Pattern.compile("[^\\d.]");
 
     // Filter  1: ON  PK       Fc    63,8 Hz  Gain  -5,0 dB  Q  8,06
-    private static Pattern GenericFilterPattern = Pattern.compile("^Filter\\s+\\d+:\\s(\\w+)\\s+(\\w+)\\s+Fc ([\\D\\d\\.]+) Hz  Gain ([\\s\\d\\.\\-]+) dB  Q ([\\s\\d\\.]+)$");
+    private final static Pattern GenericFilterPattern = Pattern.compile("^Filter\\s+\\d+:\\s(\\w+)\\s+(\\w+)\\s+Fc ([\\D\\d.]+) Hz {2}Gain ([\\s\\d.\\-]+) dB {2}Q ([\\s\\d.]+)$");
 
     public static List<Filter> parseFilterFile(String filePath) throws IOException {
         return parseFilterLines(Files.lines(Paths.get(filePath)));

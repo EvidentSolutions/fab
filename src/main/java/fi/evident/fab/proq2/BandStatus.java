@@ -2,6 +2,7 @@ package fi.evident.fab.proq2;
 
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 public enum BandStatus {
 
     Bypass(0),

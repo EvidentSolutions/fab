@@ -2,7 +2,7 @@ package fi.evident.fab.proq2;
 
 import java.io.IOException;
 
-public final class BandQ {
+final class BandQ {
 
     private final double q;
 
