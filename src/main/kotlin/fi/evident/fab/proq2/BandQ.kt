@@ -1,17 +1,14 @@
 package fi.evident.fab.proq2
 
 import fi.evident.fab.Q
+import fi.evident.fab.assertContains
 import java.io.IOException
 import java.lang.Math.*
 
-/**
- * @param q range 0.025 -> 40.00
- */
 class BandQ(private val q: Q) {
 
     init {
-        if (q < 0.025 || q > 40)
-            throw IllegalArgumentException("Q value not in limits 0.025 .. 40, was: $q")
+        (minValue..maxValue).assertContains(q, "Q")
     }
 
     @Throws(IOException::class)
@@ -21,9 +18,11 @@ class BandQ(private val q: Q) {
     }
 
     companion object {
+        val minValue = 0.025
+        val maxValue = 40.0
 
         fun limited(q: Q): BandQ {
-            return BandQ(max(0.025, min(40.0, q)))
+            return BandQ(max(BandQ.minValue, min(maxValue, q)))
         }
     }
 }

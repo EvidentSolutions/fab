@@ -1,5 +1,6 @@
 package fi.evident.fab.proq2
 
+import fi.evident.fab.assertContains
 import fi.evident.fab.dB
 import fi.evident.fab.proq2.GlobalPresetParameters.Analyzer.Flag
 import java.io.IOException
@@ -67,14 +68,8 @@ class GlobalPresetParameters {
     class Gain(private val db: dB, private val scale: dB) {
 
         init {
-
-            if (db < -1 || db > 1) {
-                throw IllegalArgumentException("Gain db not in limits -1 .. 1, was: $db")
-            }
-
-            if (scale < 0 || scale > 2) {
-                throw IllegalArgumentException("Gain scale not in limits 0 .. 2, was: $scale")
-            }
+            (-1.0..1.0).assertContains(db, "Gain db")
+            (0.0..2.0).assertContains(scale, "Gain scale")
         }
 
         @Throws(IOException::class)
@@ -90,9 +85,7 @@ class GlobalPresetParameters {
     class OutputPan(private val value: Float) {
 
         init {
-            if (value < -1 || value > 1) {
-                throw IllegalArgumentException("Pan not in limits -1 .. 1, was: $value")
-            }
+            (-1f..1f).assertContains(value, "Pan")
         }
 
         @Throws(IOException::class)
