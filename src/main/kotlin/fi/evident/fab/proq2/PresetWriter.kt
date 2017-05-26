@@ -33,8 +33,9 @@ object PresetWriter {
                 Band.fromRewFilter(filter, slope, placement).write(writer)
         }
 
-        for (i in 0..maximumNumberOfFilters - numberOfFilters - 1)
+        repeat(maximumNumberOfFilters - numberOfFilters) {
             Band.unusedBand.write(writer)
+        }
 
         globalParameters.write(writer)
     }
