@@ -21,10 +21,9 @@ enum class BandSlope constructor(private val value: Float) {
     companion object {
 
         fun of(slope: FilterSlope): BandSlope {
-            when (slope) {
-                FilterSlope.dB_oct12 -> return db_oct12
-                FilterSlope.dB_oct24 -> return dB_oct24
-                else -> throw IllegalArgumentException("Unsupported filter slope: " + slope)
+            return when (slope) {
+                FilterSlope.dB_oct12 -> db_oct12
+                FilterSlope.dB_oct24 -> dB_oct24
             }
         }
     }

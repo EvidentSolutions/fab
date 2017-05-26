@@ -4,7 +4,13 @@ import fi.evident.fab.rew.Filter
 
 import java.io.IOException
 
-internal class Band private constructor(private val type: BandType, private val slope: BandSlope, private val placement: BandPlacement, private val status: BandStatus, private val frequency: BandFrequency, private val gain: BandGain, private val q: BandQ) {
+internal class Band private constructor(private val type: BandType,
+                                        private val slope: BandSlope,
+                                        private val placement: BandPlacement,
+                                        private val status: BandStatus,
+                                        private val frequency: BandFrequency,
+                                        private val gain: BandGain,
+                                        private val q: BandQ) {
 
     @Throws(IOException::class)
     fun write(writer: LittleEndianBinaryStreamWriter) {
@@ -17,9 +23,7 @@ internal class Band private constructor(private val type: BandType, private val 
         placement.write(writer)
     }
 
-    override fun toString(): String {
-        return String.format("%s: %s Hz %s dB Q: %s", type, frequency, gain, q)
-    }
+    override fun toString() = "$type: $frequency Hz $gain dB Q: $q"
 
     companion object {
 

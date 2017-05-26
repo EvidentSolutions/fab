@@ -18,11 +18,10 @@ enum class BandPlacement constructor(private val value: Float) {
     companion object {
 
         fun of(placement: FilterPlacement): BandPlacement {
-            when (placement) {
-                FilterPlacement.Left -> return Left
-                FilterPlacement.Right -> return Right
-                FilterPlacement.Stereo -> return Stereo
-                else -> throw IllegalArgumentException("Unsupported placement: " + placement)
+            return when (placement) {
+                FilterPlacement.Left -> Left
+                FilterPlacement.Right -> Right
+                FilterPlacement.Stereo -> Stereo
             }
         }
     }

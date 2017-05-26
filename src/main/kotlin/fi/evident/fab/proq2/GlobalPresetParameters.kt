@@ -4,8 +4,10 @@ import java.io.IOException
 
 class GlobalPresetParameters {
 
-    internal class ProcessMode private constructor(private val mode: Float, private val phase: ProcessMode.Phase // affects only linear phase mode
-    ) {
+    internal class ProcessMode private constructor(
+            private val mode: Float,
+            // affects only linear phase mode
+            private val phase: ProcessMode.Phase) {
 
         internal enum class Phase constructor(private val value: Float) {
 
@@ -29,10 +31,12 @@ class GlobalPresetParameters {
 
         companion object {
 
+            @Suppress("unused")
             fun zeroLatency(): ProcessMode {
                 return ProcessMode(0f, Phase.Medium)
             }
 
+            @Suppress("unused")
             fun naturalPhase(): ProcessMode {
                 return ProcessMode(1f, Phase.Medium)
             }
@@ -54,13 +58,12 @@ class GlobalPresetParameters {
         }
     }
 
-    internal class Gain
     /**
      * @param db - Infinity to +36 dB , 0 = 0 dB
-     * *
      * @param scale 0 to 2, 1 = 100%, 2 = 200%
      */
-    (private val db: Float, private val scale: Float) {
+    //TODO Float -> Double -> dB
+    internal class Gain(private val db: Float, private val scale: Float) {
 
         init {
 
@@ -80,14 +83,12 @@ class GlobalPresetParameters {
         }
     }
 
-    internal class OutputPan
     /**
      * @param value -1 .. 1 where 0 is middle
      */
-    (private val value: Float) {
+    internal class OutputPan(private val value: Float) {
 
         init {
-
             if (value < -1 || value > 1) {
                 throw IllegalArgumentException("Pan not in limits -1 .. 1, was: " + value)
             }

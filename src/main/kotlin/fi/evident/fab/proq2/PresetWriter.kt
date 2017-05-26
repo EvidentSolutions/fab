@@ -9,9 +9,11 @@ object PresetWriter {
     private val maximumNumberOfFilters = 24
 
     @Throws(IOException::class)
-    fun writePreset(filterConfigurations: List<FilterConfiguration>, globalParameters: GlobalPresetParameters, outputStream: OutputStream) {
+    fun writePreset(filterConfigurations: List<FilterConfiguration>,
+                    globalParameters: GlobalPresetParameters,
+                    outputStream: OutputStream) {
 
-        val numberOfFilters = filterConfigurations.stream().mapToInt { x -> x.getFilters().size }.sum()
+        val numberOfFilters = filterConfigurations.stream().mapToInt { x -> x.filters.size }.sum()
 
         if (numberOfFilters > maximumNumberOfFilters)
             throw IllegalArgumentException("Filters are limited to 24, was: " + numberOfFilters)
@@ -27,7 +29,7 @@ object PresetWriter {
             val slope = BandSlope.of(filterConfiguration.slope)
             val placement = BandPlacement.of(filterConfiguration.placement)
 
-            for (filter in filterConfiguration.getFilters())
+            for (filter in filterConfiguration.filters)
                 Band.fromRewFilter(filter, slope, placement).write(writer)
         }
 

@@ -15,8 +15,6 @@ enum class BandStatus constructor(private val value: Float) {
 
     companion object {
 
-        internal fun of(enabled: Boolean): BandStatus {
-            return if (enabled) BandStatus.Enabled else BandStatus.Disabled
-        }
+        internal fun of(enabled: Boolean) = if (enabled) BandStatus.Enabled else BandStatus.Disabled
     }
 }

@@ -1,16 +1,15 @@
 package fi.evident.fab.proq2
 
+import fi.evident.fab.Hz
 import java.io.IOException
-
-internal class BandFrequency
+import java.lang.Math.log10
 
 /**
  * @param frequency range 10.0 -> 30000.0 Hz
  */
-(private val frequency: Double) {
+internal class BandFrequency(private val frequency: Hz) {
 
     init {
-
         if (frequency < 10 || frequency > 30000)
             throw IllegalArgumentException("Frequency not in limits 10 .. 30000, was: " + frequency)
     }
@@ -18,6 +17,6 @@ internal class BandFrequency
     @Throws(IOException::class)
     fun write(writer: LittleEndianBinaryStreamWriter) {
         // =LOG(A1)/LOG(2)
-        writer.writeFloat((Math.log10(frequency) / Math.log10(2.0)).toFloat())
+        writer.writeFloat((log10(frequency) / log10(2.0)).toFloat())
     }
 }
