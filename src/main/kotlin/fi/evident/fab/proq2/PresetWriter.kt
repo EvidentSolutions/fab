@@ -13,10 +13,10 @@ object PresetWriter {
                     globalParameters: GlobalPresetParameters,
                     outputStream: OutputStream) {
 
-        val numberOfFilters = filterConfigurations.stream().mapToInt { x -> x.filters.size }.sum()
+        val numberOfFilters = filterConfigurations.sumBy { it.filters.size }
 
         if (numberOfFilters > maximumNumberOfFilters)
-            throw IllegalArgumentException("Filters are limited to 24, was: " + numberOfFilters)
+            throw IllegalArgumentException("Filters are limited to 24, was: $numberOfFilters")
 
         val writer = LittleEndianBinaryStreamWriter(outputStream)
 
