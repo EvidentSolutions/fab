@@ -69,11 +69,11 @@ class GlobalPresetParameters {
         init {
 
             if (db < -1 || db > 1) {
-                throw IllegalArgumentException("Gain db not in limits -1 .. 1, was: " + db)
+                throw IllegalArgumentException("Gain db not in limits -1 .. 1, was: $db")
             }
 
             if (scale < 0 || scale > 2) {
-                throw IllegalArgumentException("Gain scale not in limits 0 .. 2, was: " + scale)
+                throw IllegalArgumentException("Gain scale not in limits 0 .. 2, was: $scale")
             }
         }
 
@@ -91,7 +91,7 @@ class GlobalPresetParameters {
 
         init {
             if (value < -1 || value > 1) {
-                throw IllegalArgumentException("Pan not in limits -1 .. 1, was: " + value)
+                throw IllegalArgumentException("Pan not in limits -1 .. 1, was: $value")
             }
         }
 

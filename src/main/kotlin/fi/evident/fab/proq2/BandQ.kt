@@ -7,11 +7,11 @@ import java.lang.Math.*
 /**
  * @param q range 0.025 -> 40.00
  */
-internal class BandQ(private val q: Q) {
+class BandQ(private val q: Q) {
 
     init {
         if (q < 0.025 || q > 40)
-            throw IllegalArgumentException("Q value not in limits 0.025 .. 40, was: " + q)
+            throw IllegalArgumentException("Q value not in limits 0.025 .. 40, was: $q")
     }
 
     @Throws(IOException::class)

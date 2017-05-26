@@ -29,7 +29,7 @@ enum class BandType constructor(private val value: Float) {
                 Filter.Type.HP -> BandType.LowCut
                 Filter.Type.LS -> BandType.LowShelf
                 Filter.Type.HS -> BandType.HighShelf
-                else -> throw IllegalArgumentException("Unsupported filter type: " + type)
+                else -> throw IllegalArgumentException("Unsupported filter type: $type")
             }
     }
 }

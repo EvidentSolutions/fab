@@ -34,7 +34,7 @@ enum class FilterPlacement {
     Stereo
 }
 
-class Filter internal constructor(val isEnabled: Boolean, val type: Type, val frequency: Hz, val gain: dB, val q: Q) {
+class Filter constructor(val isEnabled: Boolean, val type: Type, val frequency: Hz, val gain: dB, val q: Q) {
 
     enum class Type {
         PK, // PK for a peaking (parametric) filter

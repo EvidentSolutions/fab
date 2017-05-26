@@ -32,7 +32,7 @@ object Parser {
         // Remove any non-breaking spaces
         val matcher = GenericFilterPattern.matcher(line.replace(nonBreakingSpaceRegexp.toRegex(), ""))
         if (!matcher.matches())
-            throw IllegalArgumentException("Could not parse line: " + line)
+            throw IllegalArgumentException("Could not parse line: $line")
 
         val (enabled, type, freqAlmost, gain, q) = (1..5).map { matcher.trimmedGroup(it) }
         val freq = digitsAndDecimalSeparatorOnly.matcher(freqAlmost).replaceAll("")

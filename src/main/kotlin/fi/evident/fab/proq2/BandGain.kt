@@ -6,11 +6,11 @@ import java.io.IOException
 /**
  * @param gain range +-30 dB
  */
-internal class BandGain(private val gain: dB) {
+class BandGain(private val gain: dB) {
 
     init {
         if (gain < -30 || gain > 30)
-            throw IllegalArgumentException("Gain db not in limits -30 .. 30, was: " + gain)
+            throw IllegalArgumentException("Gain db not in limits -30 .. 30, was: $gain")
     }
 
     @Throws(IOException::class)
