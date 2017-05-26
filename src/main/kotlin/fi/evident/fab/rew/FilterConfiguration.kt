@@ -3,6 +3,7 @@ package fi.evident.fab.rew
 import fi.evident.fab.Hz
 import fi.evident.fab.Q
 import fi.evident.fab.dB
+import java.util.*
 
 class FilterConfiguration(val slope: FilterSlope, val placement: FilterPlacement, val filters: List<Filter>) {
 
@@ -56,4 +57,18 @@ class Filter internal constructor(val isEnabled: Boolean, val type: Type, val fr
     }
 
     override fun toString() = "$type $frequency Hz $gain dB Q: $q"
+}
+
+class FilterConfigurations(val configurations: ArrayList<FilterConfiguration> = ArrayList<FilterConfiguration>()) {
+
+    fun add(slope: FilterSlope, placement: FilterPlacement, filter: List<Filter>) {
+        configurations.add(FilterConfiguration(slope, placement, filter))
+    }
+
+    fun printDebugInfo() {
+        configurations.forEach(::println)
+    }
+
+    val totalNumberOfFilters: Int
+        get() = configurations.sumBy { it.filters.size }
 }

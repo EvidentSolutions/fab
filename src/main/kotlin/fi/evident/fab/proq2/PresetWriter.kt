@@ -1,6 +1,6 @@
 package fi.evident.fab.proq2
 
-import fi.evident.fab.rew.FilterConfiguration
+import fi.evident.fab.rew.FilterConfigurations
 import java.io.IOException
 import java.io.OutputStream
 
@@ -9,11 +9,11 @@ object PresetWriter {
     private val maximumNumberOfFilters = 24
 
     @Throws(IOException::class)
-    fun writePreset(filterConfigurations: List<FilterConfiguration>,
+    fun writePreset(filterConfigurations: FilterConfigurations,
                     globalParameters: GlobalPresetParameters,
                     outputStream: OutputStream) {
 
-        val numberOfFilters = filterConfigurations.sumBy { it.filters.size }
+        val numberOfFilters = filterConfigurations.totalNumberOfFilters
 
         if (numberOfFilters > maximumNumberOfFilters)
             throw IllegalArgumentException("Filters are limited to 24, was: $numberOfFilters")

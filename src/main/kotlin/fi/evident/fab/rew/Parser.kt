@@ -18,7 +18,10 @@ object Parser {
     private val nonBreakingSpaceRegexp = """\xA0"""
 
     @Throws(IOException::class)
-    fun parseFilterFile(filePath: String) = parseFilterLines(Files.readAllLines(Paths.get(filePath)))
+    fun parseFilterFile(filePath: String): List<Filter> {
+        val lines = Files.readAllLines(Paths.get(filePath))
+        return parseFilterLines(lines)
+    }
 
     private fun parseFilterLines(lines: List<String>) = lines.filter(this::isDefinedFilterLine).map(this::lineToBand)
 
