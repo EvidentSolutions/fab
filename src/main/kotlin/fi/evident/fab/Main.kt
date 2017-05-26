@@ -17,40 +17,37 @@ fun main(args: Array<String>) {
     var i = 0
     while (i < args.size) {
 
-        val command = args[i].trim { it <= ' ' }
+        val command = args[i++].trim { it <= ' ' }
 
-        if (i + 1 >= args.size) {
+        if (i >= args.size)
             terminate("Command must be followed by a parameter")
-        }
 
-        val parameter = args[i + 1].trim { it <= ' ' }
+        val parameter = args[i++].trim { it <= ' ' }
 
         when (command) {
             "-stereo" -> configurations.add(FilterConfiguration(dB_oct24, Stereo, parseFilterFile(parameter)))
             "-left" -> configurations.add(FilterConfiguration(dB_oct24, Left, parseFilterFile(parameter)))
             "-right" -> configurations.add(FilterConfiguration(dB_oct24, Right, parseFilterFile(parameter)))
             "-out" -> {
-                if (outputFile != null) {
+                if (outputFile != null)
                     terminate("Output cannot be defined multiple times")
-                } else {
-                    outputFile = parameter
-                }
+
+                outputFile = parameter
             }
             else -> terminate("Unsupported command: " + command)
         }
-        i += 2
     }
 
-    if (outputFile == null) {
+    if (outputFile == null)
         terminate("Output file must be defined")
-    } else {
-        val globalParameters = GlobalPresetParameters()
-        configurations.forEach(::println)
 
-        FileOutputStream(outputFile).use { fos -> PresetWriter.writePreset(configurations, globalParameters, fos) }
+    configurations.forEach(::println)
 
-        println("done")
+    FileOutputStream(outputFile).use { fos ->
+        PresetWriter.writePreset(configurations, GlobalPresetParameters(), fos)
     }
+
+    println("done")
 }
 
 private fun terminate(reason: String) {
