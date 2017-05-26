@@ -1,6 +1,8 @@
 package fi.evident.fab.proq2
 
 import fi.evident.fab.dB
+import fi.evident.fab.proq2.GlobalPresetParameters.*
+import fi.evident.fab.proq2.GlobalPresetParameters.Analyzer.Flag
 import java.io.IOException
 
 class GlobalPresetParameters {
@@ -155,40 +157,57 @@ class GlobalPresetParameters {
             }
         }
 
-        private val pre = true
-        private val post = true
-        private val sideChain = true
+        enum class Flag {
+            TRUE, FALSE;
+
+            @Throws(IOException::class)
+            fun write(writer: LittleEndianBinaryStreamWriter) {
+                val integer = when (this) {
+                    TRUE -> 1
+                    FALSE -> 0
+                }
+
+                writer.writeFloat(integer.toFloat())
+            }
+        }
+
+        private val pre = Flag.TRUE
+        private val post = Flag.TRUE
+        private val sideChain = Flag.TRUE
         private val range = Range.dB90
         private val resolution = Resolution.Medium
         private val speed = Speed.Medium
         private val tilt = Tilt.dB_oct4point5
-        private val freeze = false
-        private val spectrumGrab = true
+        private val freeze = Flag.FALSE
+        private val spectrumGrab = Flag.TRUE
 
         @Throws(IOException::class)
         fun write(writer: LittleEndianBinaryStreamWriter) {
-            writer.writeFloat((if (pre) 1 else 0).toFloat())
-            writer.writeFloat((if (post) 1 else 0).toFloat())
-            writer.writeFloat((if (sideChain) 1 else 0).toFloat())
+            pre.write(writer)
+            post.write(writer)
+            sideChain.write(writer)
+
             range.write(writer)
             resolution.write(writer)
             speed.write(writer)
             tilt.write(writer)
-            writer.writeFloat((if (freeze) 1 else 0).toFloat())
-            writer.writeFloat((if (spectrumGrab) 1 else 0).toFloat())
+
+            freeze.write(writer)
+            spectrumGrab.write(writer)
         }
+
     }
 
     private val processMode = ProcessMode.linearPhase(ProcessMode.Phase.Medium)
     private val channelMode = ChannelMode.LeftRight
     private val gain = Gain(0f, 1f)
     private val pan = OutputPan(0f)
-    private val bypass = false
-    private val phaseInvert = false
+    private val bypass = Flag.FALSE
+    private val phaseInvert = Flag.FALSE
     private val autoGain = false
     private val analyzer = Analyzer()
     private val unknown1 = 2f
-    private val midiLearn = false
+    private val midiLearn = Flag.FALSE
     private val unknown2 = -1f // solo band ??
     private val unknown3 = 0f
 
@@ -198,12 +217,16 @@ class GlobalPresetParameters {
         channelMode.write(writer)
         gain.write(writer)
         pan.write(writer)
-        writer.writeFloat((if (bypass) 1 else 0).toFloat())
-        writer.writeFloat((if (phaseInvert) 1 else 0).toFloat())
-        writer.writeFloat((if (autoGain) 2 /* enabled value actually seems to be 2 */ else 0).toFloat())
+
+        bypass.write(writer)
+        phaseInvert.write(writer)
+
+        // Enabled value actually seems to be 2
+        writer.writeFloat((if (autoGain) 2 else 0).toFloat())
+
         analyzer.write(writer)
         writer.writeFloat(unknown1)
-        writer.writeFloat((if (midiLearn) 1 else 0).toFloat())
+        midiLearn.write(writer)
         writer.writeFloat(unknown2)
         writer.writeFloat(unknown3)
     }
