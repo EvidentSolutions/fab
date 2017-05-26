@@ -4,7 +4,6 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.regex.Pattern
-import java.util.stream.Collectors.toList
 
 object Parser {
 
@@ -13,23 +12,21 @@ object Parser {
     // Filter  1: ON  PK       Fc    63,8 Hz  Gain  -5,0 dB  Q  8,06
     private val GenericFilterPattern = Pattern.compile("""^Filter\s+\d+:\s(\w+)\s+(\w+)\s+Fc ([\D\d.]+) Hz {2}Gain ([\s\d.\-]+) dB {2}Q ([\s\d.]+)$""")
 
+    private val filterLineRegex = """^Filter\s+\d+:.*$""".toRegex()
+    private val isDefinedRegexp = """^Filter\s+\d+:\s+ON\s+None.*$""".toRegex()
+    private val nonBreakingSpaceRegexp = """\xA0"""
+
     @Throws(IOException::class)
-    fun parseFilterFile(filePath: String): List<Filter> {
-        return parseFilterLines(Files.lines(Paths.get(filePath)).collect(toList()))
-    }
+    fun parseFilterFile(filePath: String) = parseFilterLines(Files.readAllLines(Paths.get(filePath)))
 
     private fun parseFilterLines(lines: List<String>) = lines.filter(this::isDefinedFilterLine).map(this::lineToBand)
 
-    private fun isDefinedFilterLine(line: String): Boolean {
-        val isFilterLine = line.matches("""^Filter\s+\d+:.*$""".toRegex())
-        val isDefined = !line.matches("""^Filter\s+\d+:\s+ON\s+None.*$""".toRegex())
-        return isFilterLine && isDefined
-    }
+    private fun isDefinedFilterLine(line: String) = line.matches(filterLineRegex) && !line.matches(isDefinedRegexp)
 
     private fun lineToBand(line: String): Filter {
 
-        // remove any non breaking spaces
-        val matcher = GenericFilterPattern.matcher(line.replace("""\xA0""".toRegex(), ""))
+        // Remove any non-breaking spaces
+        val matcher = GenericFilterPattern.matcher(line.replace(nonBreakingSpaceRegexp.toRegex(), ""))
 
         if (matcher.matches()) {
 
