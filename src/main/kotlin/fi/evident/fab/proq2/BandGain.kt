@@ -1,5 +1,6 @@
 package fi.evident.fab.proq2
 
+import fi.evident.fab.dB
 import java.io.IOException
 
 internal class BandGain
@@ -7,7 +8,7 @@ internal class BandGain
 /**
  * @param gain range +-30dB
  */
-(private val gain: Double) {
+(private val gain: dB) {
 
     init {
 
@@ -17,6 +18,6 @@ internal class BandGain
 
     @Throws(IOException::class)
     fun write(writer: LittleEndianBinaryStreamWriter) {
-        writer.writeFloat(gain.toFloat())
+        writer.writeFloat(gain)
     }
 }

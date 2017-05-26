@@ -17,6 +17,6 @@ internal class BandFrequency(private val frequency: Hz) {
     @Throws(IOException::class)
     fun write(writer: LittleEndianBinaryStreamWriter) {
         // =LOG(A1)/LOG(2)
-        writer.writeFloat((log10(frequency) / log10(2.0)).toFloat())
+        writer.writeFloat((log10(frequency.toDouble()) / log10(2.0)).toFloat())
     }
 }

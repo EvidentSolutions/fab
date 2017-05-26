@@ -1,5 +1,6 @@
 package fi.evident.fab.proq2
 
+import fi.evident.fab.dB
 import java.io.IOException
 
 class GlobalPresetParameters {
@@ -62,8 +63,7 @@ class GlobalPresetParameters {
      * @param db - Infinity to +36 dB , 0 = 0 dB
      * @param scale 0 to 2, 1 = 100%, 2 = 200%
      */
-    //TODO Float -> Double -> dB
-    internal class Gain(private val db: Float, private val scale: Float) {
+    internal class Gain(private val db: dB, private val scale: dB) {
 
         init {
 

@@ -44,8 +44,8 @@ internal class Band private constructor(private val type: BandType,
                 BandSlope.dB_oct24,
                 BandPlacement.Stereo,
                 BandStatus.Disabled,
-                BandFrequency(1000.0),
-                BandGain(0.0),
+                BandFrequency(1000f),
+                BandGain(0f),
                 BandQ(1.0)
         )
     }

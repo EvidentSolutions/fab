@@ -43,7 +43,7 @@ object Parser {
             if (type != "PK")
                 throw IllegalArgumentException("Only PK filters are supported, was: " + type)
 
-            return Filter(enabled == "ON", Filter.Type.PK, freq.toDouble(), gain.toDouble(), q.toDouble())
+            return Filter(enabled == "ON", Filter.Type.PK, freq.toFloat(), gain.toFloat(), q.toDouble())
 
         } else {
             throw IllegalArgumentException("Could not parse line: " + line)
