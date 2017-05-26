@@ -3,6 +3,7 @@ package fi.evident.fab.rew
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object Parser {
@@ -27,23 +28,21 @@ object Parser {
 
         // Remove any non-breaking spaces
         val matcher = GenericFilterPattern.matcher(line.replace(nonBreakingSpaceRegexp.toRegex(), ""))
-
-        if (matcher.matches()) {
-
-            // TODO: remove trims
-            val enabled = matcher.group(1).trim { it <= ' ' }
-            val type = matcher.group(2).trim { it <= ' ' }
-            val freq = digitsAndDecimalSeparatorOnly.matcher(matcher.group(3).trim { it <= ' ' }).replaceAll("")
-            val gain = matcher.group(4).trim { it <= ' ' }
-            val q = matcher.group(5).trim { it <= ' ' }
-
-            if (type != "PK")
-                throw IllegalArgumentException("Only PK filters are supported, was: " + type)
-
-            return Filter(enabled == "ON", Filter.Type.PK, freq.toDouble(), gain.toDouble(), q.toDouble())
-
-        } else {
+        if (!matcher.matches())
             throw IllegalArgumentException("Could not parse line: " + line)
-        }
+
+        // TODO: remove trims?
+        val enabled = matcher.trimmedGroup(1)
+        val type = matcher.trimmedGroup(2)
+        val freq = digitsAndDecimalSeparatorOnly.matcher(matcher.trimmedGroup(3)).replaceAll("")
+        val gain = matcher.trimmedGroup(4)
+        val q = matcher.trimmedGroup(5)
+
+        if (type != "PK")
+            throw IllegalArgumentException("Only PK filters are supported, was: " + type)
+
+        return Filter(enabled == "ON", Filter.Type.PK, freq.toDouble(), gain.toDouble(), q.toDouble())
     }
+
+    private fun Matcher.trimmedGroup(groupNumber: Int) = this.group(groupNumber).trim { it <= ' ' }
 }

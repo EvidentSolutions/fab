@@ -1,7 +1,6 @@
 package fi.evident.fab.proq2
 
 import fi.evident.fab.dB
-import fi.evident.fab.proq2.GlobalPresetParameters.*
 import fi.evident.fab.proq2.GlobalPresetParameters.Analyzer.Flag
 import java.io.IOException
 

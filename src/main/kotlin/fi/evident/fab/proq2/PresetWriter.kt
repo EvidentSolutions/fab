@@ -24,14 +24,12 @@ object PresetWriter {
         writer.writeInt(2)
         writer.writeInt(190)
 
-        for (filterConfiguration in filterConfigurations) {
-
-            val slope = BandSlope.of(filterConfiguration.slope)
-            val placement = BandPlacement.of(filterConfiguration.placement)
-
-            for (filter in filterConfiguration.filters)
-                Band.fromRewFilter(filter, slope, placement).write(writer)
+        val bands = filterConfigurations.flatMap { conf ->
+            val slope = BandSlope.of(conf.slope)
+            val placement = BandPlacement.of(conf.placement)
+            conf.filters.map { Band.fromRewFilter(it, slope, placement) }
         }
+        bands.forEach{ it.write(writer) }
 
         repeat(maximumNumberOfFilters - numberOfFilters) {
             Band.unusedBand.write(writer)
