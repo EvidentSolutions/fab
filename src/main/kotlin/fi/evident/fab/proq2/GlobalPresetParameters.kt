@@ -80,8 +80,8 @@ class GlobalPresetParameters {
 
         @Throws(IOException::class)
         fun write(writer: LittleEndianBinaryStreamWriter) {
-            writer.writeFloat(scale)
-            writer.writeFloat(db)
+            writer.writeFloat(scale.toFloat())
+            writer.writeFloat(db.toFloat())
         }
     }
 
@@ -200,7 +200,7 @@ class GlobalPresetParameters {
 
     private val processMode = ProcessMode.linearPhase(ProcessMode.Phase.Medium)
     private val channelMode = ChannelMode.LeftRight
-    private val gain = Gain(0f, 1f)
+    private val gain = Gain(0.0, 1.0)
     private val pan = OutputPan(0f)
     private val bypass = Flag.FALSE
     private val phaseInvert = Flag.FALSE

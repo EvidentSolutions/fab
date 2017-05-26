@@ -1,5 +1,6 @@
 package fi.evident.fab
 
-typealias Hz = Float
-typealias dB = Float
+typealias Hz = Double
+typealias dB = Double
+typealias Q = Double
 

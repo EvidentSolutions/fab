@@ -18,6 +18,6 @@ internal class BandGain
 
     @Throws(IOException::class)
     fun write(writer: LittleEndianBinaryStreamWriter) {
-        writer.writeFloat(gain)
+        writer.writeFloat(gain.toFloat())
     }
 }

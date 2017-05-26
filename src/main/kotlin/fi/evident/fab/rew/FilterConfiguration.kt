@@ -1,6 +1,7 @@
 package fi.evident.fab.rew
 
 import fi.evident.fab.Hz
+import fi.evident.fab.Q
 import fi.evident.fab.dB
 
 class FilterConfiguration(val slope: FilterSlope, val placement: FilterPlacement, val filters: List<Filter>) {
@@ -32,7 +33,7 @@ enum class FilterPlacement {
     Stereo
 }
 
-class Filter internal constructor(val isEnabled: Boolean, val type: Type, val frequency: Hz, val gain: dB, val q: Double) {
+class Filter internal constructor(val isEnabled: Boolean, val type: Type, val frequency: Hz, val gain: dB, val q: Q) {
 
     enum class Type {
         PK, // PK for a peaking (parametric) filter
