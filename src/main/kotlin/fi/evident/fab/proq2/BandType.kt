@@ -4,7 +4,7 @@ import fi.evident.fab.rew.Filter
 
 import java.io.IOException
 
-internal enum class BandType constructor(private val value: Float) {
+enum class BandType constructor(private val value: Float) {
 
     Bell(0f),
     LowShelf(1f),
@@ -22,15 +22,14 @@ internal enum class BandType constructor(private val value: Float) {
 
     companion object {
 
-        fun of(type: Filter.Type): BandType {
+        fun of(type: Filter.Type) =
             when (type) {
-                Filter.Type.PK -> return BandType.Bell
-                Filter.Type.LP -> return BandType.HighCut
-                Filter.Type.HP -> return BandType.LowCut
-                Filter.Type.LS -> return BandType.LowShelf
-                Filter.Type.HS -> return BandType.HighShelf
+                Filter.Type.PK -> BandType.Bell
+                Filter.Type.LP -> BandType.HighCut
+                Filter.Type.HP -> BandType.LowCut
+                Filter.Type.LS -> BandType.LowShelf
+                Filter.Type.HS -> BandType.HighShelf
                 else -> throw IllegalArgumentException("Unsupported filter type: " + type)
             }
-        }
     }
 }

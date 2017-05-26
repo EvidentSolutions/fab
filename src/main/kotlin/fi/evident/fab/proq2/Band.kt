@@ -5,6 +5,7 @@ import fi.evident.fab.proq2.BandSlope.dB_oct24
 import fi.evident.fab.proq2.BandStatus.Disabled
 import fi.evident.fab.proq2.BandType.Bell
 import fi.evident.fab.rew.Filter
+import fi.evident.fab.rew.FilterConfiguration
 
 import java.io.IOException
 
@@ -31,12 +32,20 @@ class Band private constructor(private val type: BandType,
 
     companion object {
 
-        fun fromRewFilter(filter: Filter, slope: BandSlope, placement: BandPlacement): Band {
+        private fun fromRewFilter(filter: Filter, slope: BandSlope, placement: BandPlacement): Band {
             return Band(BandType.of(filter.type), slope, placement,
                     BandStatus.of(filter.isEnabled),
                     BandFrequency(filter.frequency),
                     BandGain(filter.gain),
                     BandQ.limited(filter.q))
+        }
+
+        fun fromRewFilters(filters: List<FilterConfiguration>): List<Band> {
+            return filters.flatMap { conf ->
+                val slope = BandSlope.of(conf.slope)
+                val placement = BandPlacement.of(conf.placement)
+                conf.filters.map { Band.fromRewFilter(it, slope, placement) }
+            }
         }
 
         val unusedBand = Band(Bell, dB_oct24, Stereo, Disabled, BandFrequency(1000.0), BandGain(0.0), BandQ(1.0))
