@@ -13,15 +13,13 @@ fun main(args: Array<String>) {
     var outputFile: String? = null
     val configurations = FilterConfigurations()
 
-    var i = 0
-    while (i < args.size) {
+    for (i in 0 until args.size step 2) {
+        val command = args[i].trim { it <= ' ' }
 
-        val command = args[i++].trim { it <= ' ' }
+        if (i+1 >= args.size)
+            terminate("Command $command must be followed by a parameter")
 
-        if (i >= args.size)
-            terminate("Command must be followed by a parameter")
-
-        val parameter = args[i++].trim { it <= ' ' }
+        val parameter = args[i+1].trim { it <= ' ' }
 
         when (command) {
             "-stereo" -> configurations.add(dB_oct24, Stereo, parseFilterFile(parameter))
