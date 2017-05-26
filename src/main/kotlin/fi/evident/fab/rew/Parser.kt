@@ -34,15 +34,11 @@ object Parser {
         if (!matcher.matches())
             throw IllegalArgumentException("Could not parse line: " + line)
 
-        // TODO: remove trims?
-        val enabled = matcher.trimmedGroup(1)
-        val type = matcher.trimmedGroup(2)
-        val freq = digitsAndDecimalSeparatorOnly.matcher(matcher.trimmedGroup(3)).replaceAll("")
-        val gain = matcher.trimmedGroup(4)
-        val q = matcher.trimmedGroup(5)
+        val (enabled, type, freqAlmost, gain, q) = (1..5).map { matcher.trimmedGroup(it) }
+        val freq = digitsAndDecimalSeparatorOnly.matcher(freqAlmost).replaceAll("")
 
         if (type != "PK")
-            throw IllegalArgumentException("Only PK filters are supported, was: " + type)
+            throw IllegalArgumentException("Only PK filters are supported, was: $type")
 
         return Filter(enabled == "ON", Filter.Type.PK, freq.toDouble(), gain.toDouble(), q.toDouble())
     }
