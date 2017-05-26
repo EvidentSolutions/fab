@@ -8,15 +8,14 @@ class FilterConfiguration(val slope: FilterSlope, val placement: FilterPlacement
     override fun toString(): String {
 
         val result = StringBuilder().apply {
-            append("Filter configuration (").append(filters.size).append(")\n")
+            append("Filter configuration ($filters.size)\n")
             append("====================\n")
-            append("Placement: ").append(placement).append("\n")
-            append("Slope: ").append(slope).append("\n")
+            append("Placement: $placement\n")
+            append("Slope: $slope\n")
         }
 
-        for (filter in filters) {
-            result.append("Filter: ").append(filter).append("\n")
-        }
+        for (filter in filters)
+            result.append("Filter: $filter\n")
 
         return result.toString()
     }
@@ -33,11 +32,7 @@ enum class FilterPlacement {
     Stereo
 }
 
-class Filter internal constructor(val isEnabled: Boolean,
-                                  val type: Type,
-                                  val frequency: Hz,
-                                  val gain: dB,
-                                  val q: Double) {
+class Filter internal constructor(val isEnabled: Boolean, val type: Type, val frequency: Hz, val gain: dB, val q: Double) {
 
     enum class Type {
         PK, // PK for a peaking (parametric) filter
