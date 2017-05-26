@@ -5,12 +5,12 @@ import java.io.IOException
 
 class GlobalPresetParameters {
 
-    internal class ProcessMode private constructor(
+    class ProcessMode private constructor(
             private val mode: Float,
             // affects only linear phase mode
             private val phase: ProcessMode.Phase) {
 
-        internal enum class Phase constructor(private val value: Float) {
+        enum class Phase constructor(private val value: Float) {
 
             Low(0f),
             Medium(1f),
@@ -48,7 +48,7 @@ class GlobalPresetParameters {
         }
     }
 
-    internal enum class ChannelMode constructor(private val value: Float) {
+    enum class ChannelMode constructor(private val value: Float) {
 
         LeftRight(0f),
         MidSide(1f);
@@ -63,7 +63,7 @@ class GlobalPresetParameters {
      * @param db - Infinity to +36 dB , 0 = 0 dB
      * @param scale 0 to 2, 1 = 100%, 2 = 200%
      */
-    internal class Gain(private val db: dB, private val scale: dB) {
+    class Gain(private val db: dB, private val scale: dB) {
 
         init {
 
@@ -86,7 +86,7 @@ class GlobalPresetParameters {
     /**
      * @param value -1 .. 1 where 0 is middle
      */
-    internal class OutputPan(private val value: Float) {
+    class OutputPan(private val value: Float) {
 
         init {
             if (value < -1 || value > 1) {
@@ -100,9 +100,9 @@ class GlobalPresetParameters {
         }
     }
 
-    internal class Analyzer {
+    class Analyzer {
 
-        internal enum class Range constructor(private val value: Float) {
+        enum class Range constructor(private val value: Float) {
 
             dB60(0f),
             dB90(1f),
@@ -114,7 +114,7 @@ class GlobalPresetParameters {
             }
         }
 
-        internal enum class Resolution constructor(private val value: Float) {
+        enum class Resolution constructor(private val value: Float) {
 
             Low(0f),
             Medium(1f),
@@ -127,7 +127,7 @@ class GlobalPresetParameters {
             }
         }
 
-        internal enum class Speed constructor(private val value: Float) {
+        enum class Speed constructor(private val value: Float) {
 
             VerySlow(0f),
             Slow(1f),
@@ -141,7 +141,7 @@ class GlobalPresetParameters {
             }
         }
 
-        internal enum class Tilt constructor(private val value: Float) {
+        enum class Tilt constructor(private val value: Float) {
 
             dB_oct0(0f),
             dB_oct1point5(1f),
