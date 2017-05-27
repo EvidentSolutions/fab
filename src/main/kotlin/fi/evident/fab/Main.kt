@@ -1,7 +1,7 @@
 package fi.evident.fab
 
 import fi.evident.fab.proq2.GlobalPresetParameters
-import fi.evident.fab.proq2.PresetWriter
+import fi.evident.fab.proq2.writePreset
 import fi.evident.fab.rew.FilterConfigurations
 import fi.evident.fab.rew.FilterPlacement.*
 import fi.evident.fab.rew.FilterSlope.dB_oct24
@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
     configurations.printDebugInfo()
 
     FileOutputStream(outputFile).use { fos ->
-        PresetWriter.writePreset(configurations, GlobalPresetParameters(), fos)
+        writePreset(configurations, GlobalPresetParameters(), fos)
     }
 
     println("Done")

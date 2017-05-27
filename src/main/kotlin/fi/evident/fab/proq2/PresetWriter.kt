@@ -4,34 +4,31 @@ import fi.evident.fab.rew.FilterConfigurations
 import java.io.IOException
 import java.io.OutputStream
 
-object PresetWriter {
+private val maximumNumberOfFilters = 24
 
-    private val maximumNumberOfFilters = 24
+@Throws(IOException::class)
+fun writePreset(filterConfigurations: FilterConfigurations,
+                globalParameters: GlobalPresetParameters,
+                outputStream: OutputStream) {
 
-    @Throws(IOException::class)
-    fun writePreset(filterConfigurations: FilterConfigurations,
-                    globalParameters: GlobalPresetParameters,
-                    outputStream: OutputStream) {
+    val numberOfFilters = filterConfigurations.totalNumberOfFilters
 
-        val numberOfFilters = filterConfigurations.totalNumberOfFilters
+    if (numberOfFilters > maximumNumberOfFilters)
+        throw IllegalArgumentException("Filters are limited to $maximumNumberOfFilters, was: $numberOfFilters")
 
-        if (numberOfFilters > maximumNumberOfFilters)
-            throw IllegalArgumentException("Filters are limited to $maximumNumberOfFilters, was: $numberOfFilters")
+    val writer = LittleEndianBinaryStreamWriter(outputStream)
 
-        val writer = LittleEndianBinaryStreamWriter(outputStream)
+    writer.writeBytes("FQ2p".toByteArray())
+    writer.writeInt(2)
+    writer.writeInt(190)
 
-        writer.writeBytes("FQ2p".toByteArray())
-        writer.writeInt(2)
-        writer.writeInt(190)
-
-        Band.fromRewFilters(filterConfigurations).forEach{
-            it.write(writer)
-        }
-
-        repeat(maximumNumberOfFilters - numberOfFilters) {
-            Band.unusedBand.write(writer)
-        }
-
-        globalParameters.write(writer)
+    Band.fromRewFilters(filterConfigurations).forEach{
+        it.write(writer)
     }
+
+    repeat(maximumNumberOfFilters - numberOfFilters) {
+        Band.unusedBand.write(writer)
+    }
+
+    globalParameters.write(writer)
 }
