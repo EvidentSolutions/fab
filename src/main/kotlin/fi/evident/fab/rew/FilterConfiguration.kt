@@ -69,6 +69,7 @@ class FilterConfigurations(val configurations: ArrayList<FilterConfiguration> = 
         configurations.forEach(::println)
     }
 
-    val totalNumberOfFilters: Int
-        get() = configurations.sumBy { it.filters.size }
+    val amount: Int by lazy {
+        configurations.sumBy { it.filters.size }
+    }
 }

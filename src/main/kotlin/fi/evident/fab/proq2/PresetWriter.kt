@@ -7,14 +7,14 @@ import java.io.OutputStream
 private val maximumNumberOfFilters = 24
 
 @Throws(IOException::class)
-fun writePreset(filterConfigurations: FilterConfigurations,
+fun writePreset(filters: FilterConfigurations,
                 globalParameters: GlobalPresetParameters,
                 outputStream: OutputStream) {
 
-    val numberOfFilters = filterConfigurations.totalNumberOfFilters
+    if (filters.amount > maximumNumberOfFilters)
+        throw IllegalArgumentException("Filters are limited to $maximumNumberOfFilters, was: $filters.amount")
 
-    if (numberOfFilters > maximumNumberOfFilters)
-        throw IllegalArgumentException("Filters are limited to $maximumNumberOfFilters, was: $numberOfFilters")
+    val bands = Band.fromRewFilters(filters)
 
     val writer = LittleEndianBinaryStreamWriter(outputStream)
 
@@ -22,11 +22,9 @@ fun writePreset(filterConfigurations: FilterConfigurations,
     writer.writeInt(2)
     writer.writeInt(190)
 
-    Band.fromRewFilters(filterConfigurations).forEach{
-        it.write(writer)
-    }
+    bands.forEach{ it.write(writer) }
 
-    repeat(maximumNumberOfFilters - numberOfFilters) {
+    repeat(maximumNumberOfFilters - filters.amount) {
         Band.unusedBand.write(writer)
     }
 
