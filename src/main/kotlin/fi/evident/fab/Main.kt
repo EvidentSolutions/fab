@@ -3,36 +3,29 @@ package fi.evident.fab
 import fi.evident.fab.proq2.GlobalPresetParameters
 import fi.evident.fab.proq2.PresetWriter
 import fi.evident.fab.rew.FilterConfigurations
-import fi.evident.fab.rew.FilterPlacement
 import fi.evident.fab.rew.FilterPlacement.*
-import fi.evident.fab.rew.FilterSlope
 import fi.evident.fab.rew.FilterSlope.dB_oct24
 import fi.evident.fab.rew.Parser.parseFilterFile
 import java.io.FileOutputStream
 
 fun main(args: Array<String>) {
+    val arguments = args.map{it.trim { it <= ' ' }}
 
     var outputFile: String? = null
     val configurations = FilterConfigurations()
 
-    fun trimmedArgument(n: Int) = args[n].trim { it <= ' ' }
+    for (i in 0 until arguments.size step 2) {
+        val command = arguments[i]
 
-    fun addConfiguration(slope: FilterSlope, placement: FilterPlacement, parameter: String) {
-        configurations.add(slope, placement, parseFilterFile(parameter))
-    }
-
-    for (i in 0 until args.size step 2) {
-        val command = trimmedArgument(i)
-
-        if (i+1 >= args.size)
+        if (i+1 >= arguments.size)
             terminate("Command $command must be followed by a parameter")
 
-        val parameter = trimmedArgument(i+1)
+        val parameter = arguments[i+1]
 
         when (command) {
-            "-stereo" -> addConfiguration(dB_oct24, Stereo, parameter)
-            "-left" -> addConfiguration(dB_oct24, Left, parameter)
-            "-right" -> addConfiguration(dB_oct24, Right, parameter)
+            "-stereo" -> configurations.add(dB_oct24, Stereo, parseFilterFile(parameter))
+            "-left" -> configurations.add(dB_oct24, Left, parseFilterFile(parameter))
+            "-right" -> configurations.add(dB_oct24, Right, parseFilterFile(parameter))
             "-out" -> {
                 if (outputFile != null)
                     terminate("Output cannot be defined multiple times")
